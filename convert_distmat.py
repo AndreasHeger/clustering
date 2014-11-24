@@ -13,7 +13,10 @@ def convert_distmat(data):
         a   b   d
         a   c   d
         b   c   d
-   
+
+    AH: separate IO from processing.
+    AH: bad name for a function, too generic. Does not describe what it does.
+
     '''
     mat = pd.read_table(data, delimiter="\s", names=['id1', 'id2', 'dist'])
     mat = pd.pivot(index = mat['id1'], columns = mat['id2'], values = mat['dist'])
