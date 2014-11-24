@@ -5,6 +5,8 @@ Created on Tue Nov 18 12:59:51 2014
 @author: katherineb
 """
 
+# AH: make pep8 compliant, see pep8 utility.
+
 # -*- coding: utf-8 -*-
 """
 Created on Fri Nov  7 13:39:45 2014
@@ -20,6 +22,7 @@ from class_density_cluster import density_peak_clusters
 def points(x, y):
     """
     makes a list of coordinates of positions of points for all indices in x and y
+    AH: bad name for function, too generic
     """
     i = 0
     ps = []
@@ -35,6 +38,7 @@ def make_dist_mat(p, output):
     """ 
     calculates the distance between pairs of points
     writes the distance matrix to file output    
+    AH: separate computation from I/O
     """
     out = open(output, "w")
     i = 0
@@ -45,6 +49,7 @@ def make_dist_mat(p, output):
             y1 = p[i][1]
             y2 = p[j][1]
             dist = math.hypot(x2-x1, y2-y1)
+            # AH: avoid string concanetation use "\t".join(())
             out.write(str(i) + "\t" + str(j) + "\t"+ str(dist) + "\n")
         i += 1
     out.close()
@@ -69,6 +74,7 @@ def pointcol(clusters, points, z):
     for item in points:
         plt.plot(points[i][0], points[i][1], markerfacecolor=colours[clusters[i]], markeredgecolor=colours[clusters[i]], marker='o', lw = 0)
         i += 1
+
 # random clustered datasets with different parameters
 data1 = datasets.make_blobs(centers=8, n_samples=300)[0]
 data2 = datasets.make_blobs(centers=3, n_samples=100)[0]
@@ -89,6 +95,9 @@ for data in datasets:
     except:
         X = list(data[0])
         Y = list(data[1])
+
+    # AH: avoid string concatenation, use string interpolation
+    # "raw_%i.out" % i
     output_raw(data, "raw_"+str(i)+".out")
     p = points(X, Y)
     dist = make_dist_mat(p, "dist_"+str(i)+".out")

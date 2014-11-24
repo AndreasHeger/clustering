@@ -9,12 +9,29 @@ import pandas as pd
 import math
 
 class density_peak_clusters(object):
+    '''AH: add documentation of class here
+
+    1. What does this class do?
+    2. What are the options to the constructor?
+    3. I think the constructor should not take data or outfile only
+       algorithm parameters.
+    4. Separate construction from computation - creating a class
+       is usually expected not to do much.
+    
+    I would try to model it similar to:
+
+    http://scikit-learn.org/dev/modules/generated/sklearn.cluster.KMeans.html#sklearn.cluster.KMeans
+
+    with a "fit" method.
+    '''
+
     def __init__(self, data, outfile):
         self.matrix = data[0]
         self.ids = data[1]
         self.outfile = outfile
         self.dc = np.percentile(self.matrix, 2) # dc  = cutoff distance
         self.pis = self.gaussian_k()
+
         if self.pis != None: # if > 0 cluster centres are identified
             self.deltas = self.delta_all()
             self.nnhds = self.nnhd_all()
@@ -121,6 +138,8 @@ class density_peak_clusters(object):
         '''
         assigns the remaining points to clusters based on the cluster of their nnhd
         returns ccs - an ordered list of cluster assignations
+
+        AH: better name for method
         '''
         ccs = self.ccs
         nnhds = self.nnhds
